@@ -5,18 +5,23 @@ extends CharacterBody2D
 signal health_changed(current: int, maximum: int)
 signal died
 
-const SPEED := 240.0
 const MAX_HEALTH := 5
 const INVULNERABILITY_SECONDS := 0.75
 const RADIUS := 26.0
-const ATTACK_RANGE := 280.0
-const ATTACK_INTERVAL := 0.65
-const ATTACK_DAMAGE := 1
+const INITIAL_MOVE_SPEED := 240.0
+const INITIAL_ATTACK_RANGE := 280.0
+const INITIAL_ATTACK_INTERVAL := 0.65
+const INITIAL_ATTACK_DAMAGE := 1
+const MIN_ATTACK_INTERVAL := 0.20
 
 const CRUMB_SCENE := preload("res://scenes/player/crumb_projectile.tscn")
 
 var health: int = MAX_HEALTH
 var is_dead: bool = false
+var move_speed: float = INITIAL_MOVE_SPEED
+var attack_range: float = INITIAL_ATTACK_RANGE
+var attack_interval: float = INITIAL_ATTACK_INTERVAL
+var attack_damage: int = INITIAL_ATTACK_DAMAGE
 
 var _invulnerable: bool = false
 var _invulnerability_left: float = 0.0
@@ -46,7 +51,7 @@ func _physics_process(delta: float) -> void:
 
 	# get_vector já normaliza diagonais para a velocidade não ficar maior.
 	var direction := Input.get_vector("move_left", "move_right", "move_up", "move_down")
-	velocity = direction * SPEED
+	velocity = direction * move_speed
 	move_and_slide()
 	_update_auto_attack(delta)
 
@@ -87,12 +92,12 @@ func _update_auto_attack(delta: float) -> void:
 		return
 
 	_fire_at(target)
-	_attack_cooldown = ATTACK_INTERVAL
+	_attack_cooldown = attack_interval
 
 
 func _find_nearest_enemy() -> Node2D:
 	var nearest: Node2D = null
-	var nearest_distance := ATTACK_RANGE
+	var nearest_distance := attack_range
 
 	for node in get_tree().get_nodes_in_group("enemies"):
 		if not is_instance_valid(node) or not node is Node2D:
@@ -115,7 +120,19 @@ func _fire_at(target: Node2D) -> void:
 		host = get_parent()
 	host.add_child(crumb)
 	crumb.global_position = global_position
-	crumb.setup(target, ATTACK_DAMAGE)
+	crumb.setup(target, attack_damage)
+
+
+func apply_upgrade(upgrade_id: StringName) -> void:
+	match upgrade_id:
+		&"damage":
+			attack_damage += 1
+		&"attack_speed":
+			attack_interval = maxf(MIN_ATTACK_INTERVAL, attack_interval * 0.85)
+		&"range":
+			attack_range += 50.0
+		&"move_speed":
+			move_speed += 25.0
 
 
 func _die() -> void:

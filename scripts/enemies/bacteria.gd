@@ -2,11 +2,14 @@ class_name Bacteria
 extends CharacterBody2D
 ## Inimigo simples: persegue o jogador, causa dano em contato e pode ser eliminado.
 
+signal defeated(xp_amount: int)
+
 const SPEED := 150.0
 const DAMAGE := 1
 const RADIUS := 18.0
 const MAX_HEALTH := 4
 const HIT_FLASH_SECONDS := 0.12
+const XP_REWARD := 10
 
 @onready var _hitbox: Area2D = $Hitbox
 
@@ -75,5 +78,8 @@ func _try_damage_player() -> void:
 
 
 func _die() -> void:
+	if is_dead:
+		return
 	is_dead = true
+	defeated.emit(XP_REWARD)
 	queue_free()

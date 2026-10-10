@@ -3,11 +3,12 @@
 [ext_resource type="Script" uid="uid://d2wg8slsgneei" path="res://scripts/ui/hud.gd" id="1_hud"]
 
 [node name="HUD" type="CanvasLayer"]
+process_mode = 3
 script = ExtResource("1_hud")
 
 [node name="Margin" type="MarginContainer" parent="."]
-offset_right = 420.0
-offset_bottom = 120.0
+offset_right = 460.0
+offset_bottom = 220.0
 theme_override_constants/margin_left = 24
 theme_override_constants/margin_top = 16
 
@@ -26,6 +27,24 @@ layout_mode = 2
 theme_override_colors/font_color = Color(0.82, 0.92, 1, 1)
 theme_override_font_sizes/font_size = 24
 text = "Tempo: 0.0s"
+
+[node name="LevelLabel" type="Label" parent="Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.95, 0.86, 0.45, 1)
+theme_override_font_sizes/font_size = 22
+text = "Nível: 1"
+
+[node name="XpLabel" type="Label" parent="Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.78, 0.88, 0.62, 1)
+theme_override_font_sizes/font_size = 20
+text = "XP: 0 / 30"
+
+[node name="XpBar" type="ProgressBar" parent="Margin/VBox"]
+custom_minimum_size = Vector2(0, 18)
+layout_mode = 2
+max_value = 30.0
+show_percentage = false
 
 [node name="GameOver" type="Control" parent="."]
 visible = false
@@ -80,3 +99,65 @@ custom_minimum_size = Vector2(180, 40)
 layout_mode = 2
 size_flags_horizontal = 4
 text = "Reiniciar"
+
+[node name="UpgradePanel" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Dim" type="ColorRect" parent="UpgradePanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.02, 0.02, 0.04, 0.72)
+
+[node name="Center" type="CenterContainer" parent="UpgradePanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="PanelContainer" parent="UpgradePanel/Center"]
+custom_minimum_size = Vector2(480, 340)
+layout_mode = 2
+
+[node name="VBox" type="VBoxContainer" parent="UpgradePanel/Center/Panel"]
+layout_mode = 2
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="Title" type="Label" parent="UpgradePanel/Center/Panel/VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "Escolha uma melhoria"
+horizontal_alignment = 1
+
+[node name="Hint" type="Label" parent="UpgradePanel/Center/Panel/VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "A partida fica pausada até você escolher."
+horizontal_alignment = 1
+
+[node name="Option1" type="Button" parent="UpgradePanel/Center/Panel/VBox"]
+custom_minimum_size = Vector2(440, 72)
+layout_mode = 2
+text = "Melhoria 1"
+
+[node name="Option2" type="Button" parent="UpgradePanel/Center/Panel/VBox"]
+custom_minimum_size = Vector2(440, 72)
+layout_mode = 2
+text = "Melhoria 2"
+
+[node name="Option3" type="Button" parent="UpgradePanel/Center/Panel/VBox"]
+custom_minimum_size = Vector2(440, 72)
+layout_mode = 2
+text = "Melhoria 3"
