@@ -1,0 +1,72 @@
+[gd_scene load_steps=6 format=3]
+
+[ext_resource type="Script" uid="uid://cdbqmx0m1h6b" path="res://scripts/main.gd" id="1_main"]
+[ext_resource type="PackedScene" path="res://scenes/player/player.tscn" id="2_player"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/bacteria.tscn" id="3_bacteria"]
+[ext_resource type="PackedScene" path="res://scenes/ui/hud.tscn" id="4_hud"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_h"]
+size = Vector2(2480, 40)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_v"]
+size = Vector2(40, 1680)
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_main")
+
+[node name="Arena" type="Node2D" parent="."]
+
+[node name="Floor" type="Polygon2D" parent="Arena"]
+color = Color(0.10, 0.12, 0.14, 1)
+polygon = PackedVector2Array(-1200, -800, 1200, -800, 1200, 800, -1200, 800)
+
+[node name="GridHint" type="Polygon2D" parent="Arena"]
+color = Color(0.16, 0.19, 0.22, 1)
+polygon = PackedVector2Array(-4, -800, 4, -800, 4, 800, -4, 800)
+
+[node name="GridHint2" type="Polygon2D" parent="Arena"]
+color = Color(0.16, 0.19, 0.22, 1)
+polygon = PackedVector2Array(-1200, -4, 1200, -4, 1200, 4, -1200, 4)
+
+[node name="WallVisualTop" type="Polygon2D" parent="Arena"]
+color = Color(0.05, 0.06, 0.07, 1)
+polygon = PackedVector2Array(-1240, -840, 1240, -840, 1240, -800, -1240, -800)
+
+[node name="WallVisualBottom" type="Polygon2D" parent="Arena"]
+color = Color(0.05, 0.06, 0.07, 1)
+polygon = PackedVector2Array(-1240, 800, 1240, 800, 1240, 840, -1240, 840)
+
+[node name="WallVisualLeft" type="Polygon2D" parent="Arena"]
+color = Color(0.05, 0.06, 0.07, 1)
+polygon = PackedVector2Array(-1240, -840, -1200, -840, -1200, 840, -1240, 840)
+
+[node name="WallVisualRight" type="Polygon2D" parent="Arena"]
+color = Color(0.05, 0.06, 0.07, 1)
+polygon = PackedVector2Array(1200, -840, 1240, -840, 1240, 840, 1200, 840)
+
+[node name="Walls" type="StaticBody2D" parent="Arena"]
+collision_layer = 4
+collision_mask = 0
+
+[node name="Top" type="CollisionShape2D" parent="Arena/Walls"]
+position = Vector2(0, -820)
+shape = SubResource("RectangleShape2D_h")
+
+[node name="Bottom" type="CollisionShape2D" parent="Arena/Walls"]
+position = Vector2(0, 820)
+shape = SubResource("RectangleShape2D_h")
+
+[node name="Left" type="CollisionShape2D" parent="Arena/Walls"]
+position = Vector2(-1220, 0)
+shape = SubResource("RectangleShape2D_v")
+
+[node name="Right" type="CollisionShape2D" parent="Arena/Walls"]
+position = Vector2(1220, 0)
+shape = SubResource("RectangleShape2D_v")
+
+[node name="Player" parent="." instance=ExtResource("2_player")]
+
+[node name="Bacteria" parent="." instance=ExtResource("3_bacteria")]
+position = Vector2(420, 180)
+
+[node name="HUD" parent="." instance=ExtResource("4_hud")]
