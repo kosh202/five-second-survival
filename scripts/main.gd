@@ -83,7 +83,13 @@ func _try_spawn_bacteria() -> bool:
 		return false
 
 	var bacteria := BACTERIA_SCENE.instantiate() as Bacteria
+
+# Depois de 20 segundos, algumas bactérias serão velozes.
+	if _elapsed_seconds >= 20.0 and randf() < 0.3:
+		bacteria.configure_fast_variant()
+
 	bacteria.defeated.connect(_on_enemy_defeated)
+	
 	_enemies.add_child(bacteria)
 	bacteria.global_position = spawn_position as Vector2
 	return true
