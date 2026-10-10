@@ -1,0 +1,39 @@
+[gd_scene format=3 uid="uid://ps0qpbid8kpf"]
+
+[ext_resource type="Script" uid="uid://btuk157haapjb" path="res://scripts/ui/main_menu.gd" id="1_sl1te"]
+
+[node name="Control" type="Control" unique_id=194965960]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_sl1te")
+
+[node name="CenterContainer" type="CenterContainer" parent="." unique_id=1329174074]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer" unique_id=2050007367]
+layout_mode = 2
+
+[node name="TitleLabel" type="Label" parent="CenterContainer/VBoxContainer" unique_id=351750653]
+layout_mode = 2
+text = "FIVE SECOND SURVIVAL"
+
+[node name="PlayButton" type="Button" parent="CenterContainer/VBoxContainer" unique_id=1201294174]
+layout_mode = 2
+text = "JOGAR"
+
+[node name="QuitButton" type="Button" parent="CenterContainer/VBoxContainer" unique_id=1083438859]
+layout_mode = 2
+text = "SAIR"
+
+[node name="InstructionsLabel" type="Label" parent="CenterContainer/VBoxContainer" unique_id=1529866057]
+layout_mode = 2
+text = "WASD / SETAS — MOVER"
