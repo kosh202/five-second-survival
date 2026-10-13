@@ -27,6 +27,7 @@ const XP_REQUIREMENT_GROWTH := 1.25
 var _elapsed_seconds: float = 0.0
 var _game_over: bool = false
 var _spawn_cooldown: float = 0.0
+var _difficulty_phase: int = 1
 var _xp: int = 0
 var _level: int = 1
 var _xp_to_next: int = FIRST_LEVEL_XP
@@ -42,6 +43,7 @@ func _ready() -> void:
 	_hud.update_health(_player.health, _player.MAX_HEALTH)
 	_hud.update_time(0.0)
 	_hud.update_experience(_level, _xp, _xp_to_next)
+	_hud.update_difficulty_phase(_difficulty_phase)
 
 
 func _process(delta: float) -> void:
@@ -51,6 +53,7 @@ func _process(delta: float) -> void:
 		return
 
 	_elapsed_seconds += delta
+	_update_difficulty_phase()
 	_hud.update_time(_elapsed_seconds)
 	_update_spawning(delta)
 
@@ -67,11 +70,46 @@ func _update_spawning(delta: float) -> void:
 		_spawn_cooldown = 0.2
 
 
+
 func _current_spawn_interval() -> float:
-	return maxf(
-		SPAWN_INTERVAL_MIN,
-		SPAWN_INTERVAL_START - _elapsed_seconds * SPAWN_INTERVAL_DECAY_PER_SECOND
-	)
+	var phase_min_interval := SPAWN_INTERVAL_MIN
+
+	match _difficulty_phase:
+		1:
+			phase_min_interval = 0.8
+		2:
+			phase_min_interval = 0.6
+		3:
+			phase_min_interval = 0.4
+		4:
+			phase_min_interval = 0.25
+
+	var interval := SPAWN_INTERVAL_START - _elapsed_seconds * SPAWN_INTERVAL_DECAY_PER_SECOND
+
+	return maxf(phase_min_interval, interval)
+
+	
+
+
+func _update_difficulty_phase() -> void:
+	var previous_phase := _difficulty_phase
+
+	if _elapsed_seconds < 20.0:
+		_difficulty_phase = 1
+	elif _elapsed_seconds < 45.0:
+		_difficulty_phase = 2
+	elif _elapsed_seconds < 90.0:
+		_difficulty_phase = 3
+	else:
+		_difficulty_phase = 4
+
+	if _difficulty_phase != previous_phase:
+		_hud.update_difficulty_phase(_difficulty_phase)
+		
+	if _difficulty_phase != previous_phase:
+		_hud.update_difficulty_phase(_difficulty_phase)
+		_hud.show_phase_announcement(_difficulty_phase)
+
 
 
 func _try_spawn_bacteria() -> bool:
@@ -84,24 +122,30 @@ func _try_spawn_bacteria() -> bool:
 
 	var bacteria := BACTERIA_SCENE.instantiate() as Bacteria
 
+	var variant_roll := randf()
 
-# A partir de 45 segundos, podem surgir inimigos resistentes.
-	if _elapsed_seconds >= 45.0:
-		var variant_roll := randf()
-
-		if variant_roll < 0.15:
-			bacteria.configure_tough_variant()
-		elif variant_roll < 0.45:
-			bacteria.configure_fast_variant()
-	elif _elapsed_seconds >= 20.0 and randf() < 0.3:
-		bacteria.configure_fast_variant()
-
+	match _difficulty_phase:
+		1:
+			pass # Apenas bactérias comuns.
+		2:
+			if variant_roll < 0.30:
+				bacteria.configure_fast_variant()
+		3:
+			if variant_roll < 0.20:
+				bacteria.configure_tough_variant()
+			elif variant_roll < 0.55:
+				bacteria.configure_fast_variant()
+		4:
+			if variant_roll < 0.30:
+				bacteria.configure_tough_variant()
+			elif variant_roll < 0.70:
+				bacteria.configure_fast_variant()
 
 	bacteria.defeated.connect(_on_enemy_defeated)
-	
 	_enemies.add_child(bacteria)
 	bacteria.global_position = spawn_position as Vector2
 	return true
+
 
 
 func _alive_enemy_count() -> int:

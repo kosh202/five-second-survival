@@ -1,52 +1,56 @@
-[gd_scene load_steps=1 format=3]
+[gd_scene format=3 uid="uid://bpkat13hitr8k"]
 
 [ext_resource type="Script" uid="uid://d2wg8slsgneei" path="res://scripts/ui/hud.gd" id="1_hud"]
 
-[node name="HUD" type="CanvasLayer"]
+[node name="HUD" type="CanvasLayer" unique_id=207180699]
 process_mode = 3
 script = ExtResource("1_hud")
 
-[node name="Margin" type="MarginContainer" parent="."]
+[node name="Margin" type="MarginContainer" parent="." unique_id=1611247178]
 offset_right = 460.0
 offset_bottom = 220.0
 theme_override_constants/margin_left = 24
 theme_override_constants/margin_top = 16
 
-[node name="VBox" type="VBoxContainer" parent="Margin"]
+[node name="VBox" type="VBoxContainer" parent="Margin" unique_id=1639642195]
 layout_mode = 2
 theme_override_constants/separation = 4
 
-[node name="HealthLabel" type="Label" parent="Margin/VBox"]
+[node name="HealthLabel" type="Label" parent="Margin/VBox" unique_id=2095819850]
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 0.92, 0.78, 1)
 theme_override_font_sizes/font_size = 28
 text = "Vida: 5 / 5"
 
-[node name="TimeLabel" type="Label" parent="Margin/VBox"]
+[node name="TimeLabel" type="Label" parent="Margin/VBox" unique_id=1500769241]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.82, 0.92, 1, 1)
 theme_override_font_sizes/font_size = 24
 text = "Tempo: 0.0s"
 
-[node name="LevelLabel" type="Label" parent="Margin/VBox"]
+[node name="PhaseLabel" type="Label" parent="Margin/VBox" unique_id=626217749]
+layout_mode = 2
+text = "Fase 1 — Início"
+
+[node name="LevelLabel" type="Label" parent="Margin/VBox" unique_id=2139987116]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.95, 0.86, 0.45, 1)
 theme_override_font_sizes/font_size = 22
 text = "Nível: 1"
 
-[node name="XpLabel" type="Label" parent="Margin/VBox"]
+[node name="XpLabel" type="Label" parent="Margin/VBox" unique_id=441731494]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.78, 0.88, 0.62, 1)
 theme_override_font_sizes/font_size = 20
 text = "XP: 0 / 30"
 
-[node name="XpBar" type="ProgressBar" parent="Margin/VBox"]
+[node name="XpBar" type="ProgressBar" parent="Margin/VBox" unique_id=1816702967]
 custom_minimum_size = Vector2(0, 18)
 layout_mode = 2
 max_value = 30.0
 show_percentage = false
 
-[node name="GameOver" type="Control" parent="."]
+[node name="GameOver" type="Control" parent="." unique_id=413992555]
 visible = false
 layout_mode = 3
 anchors_preset = 15
@@ -55,7 +59,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Dim" type="ColorRect" parent="GameOver"]
+[node name="Dim" type="ColorRect" parent="GameOver" unique_id=747050765]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -64,7 +68,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.02, 0.02, 0.04, 0.72)
 
-[node name="Center" type="CenterContainer" parent="GameOver"]
+[node name="Center" type="CenterContainer" parent="GameOver" unique_id=1483805925]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -72,35 +76,35 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Panel" type="PanelContainer" parent="GameOver/Center"]
+[node name="Panel" type="PanelContainer" parent="GameOver/Center" unique_id=1040657480]
 custom_minimum_size = Vector2(420, 180)
 layout_mode = 2
 
-[node name="VBox" type="VBoxContainer" parent="GameOver/Center/Panel"]
+[node name="VBox" type="VBoxContainer" parent="GameOver/Center/Panel" unique_id=672465855]
 layout_mode = 2
 theme_override_constants/separation = 16
 alignment = 1
 
-[node name="Title" type="Label" parent="GameOver/Center/Panel/VBox"]
+[node name="Title" type="Label" parent="GameOver/Center/Panel/VBox" unique_id=1836719025]
 layout_mode = 2
 theme_override_font_sizes/font_size = 40
 text = "Game Over"
 horizontal_alignment = 1
 
-[node name="Hint" type="Label" parent="GameOver/Center/Panel/VBox"]
+[node name="Hint" type="Label" parent="GameOver/Center/Panel/VBox" unique_id=669856778]
 layout_mode = 2
 theme_override_font_sizes/font_size = 18
 text = "A pizza não sobreviveu aos germes.
 Pressione R ou o botão para tentar de novo."
 horizontal_alignment = 1
 
-[node name="RestartButton" type="Button" parent="GameOver/Center/Panel/VBox"]
+[node name="RestartButton" type="Button" parent="GameOver/Center/Panel/VBox" unique_id=602850848]
 custom_minimum_size = Vector2(180, 40)
 layout_mode = 2
 size_flags_horizontal = 4
 text = "Reiniciar"
 
-[node name="UpgradePanel" type="Control" parent="."]
+[node name="UpgradePanel" type="Control" parent="." unique_id=443635923]
 visible = false
 layout_mode = 3
 anchors_preset = 15
@@ -109,7 +113,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Dim" type="ColorRect" parent="UpgradePanel"]
+[node name="Dim" type="ColorRect" parent="UpgradePanel" unique_id=1820109925]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -118,7 +122,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.02, 0.02, 0.04, 0.72)
 
-[node name="Center" type="CenterContainer" parent="UpgradePanel"]
+[node name="Center" type="CenterContainer" parent="UpgradePanel" unique_id=702862103]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -126,38 +130,53 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Panel" type="PanelContainer" parent="UpgradePanel/Center"]
+[node name="Panel" type="PanelContainer" parent="UpgradePanel/Center" unique_id=1576343063]
 custom_minimum_size = Vector2(480, 340)
 layout_mode = 2
 
-[node name="VBox" type="VBoxContainer" parent="UpgradePanel/Center/Panel"]
+[node name="VBox" type="VBoxContainer" parent="UpgradePanel/Center/Panel" unique_id=1660653382]
 layout_mode = 2
 theme_override_constants/separation = 12
 alignment = 1
 
-[node name="Title" type="Label" parent="UpgradePanel/Center/Panel/VBox"]
+[node name="Title" type="Label" parent="UpgradePanel/Center/Panel/VBox" unique_id=18032202]
 layout_mode = 2
 theme_override_font_sizes/font_size = 32
 text = "Escolha uma melhoria"
 horizontal_alignment = 1
 
-[node name="Hint" type="Label" parent="UpgradePanel/Center/Panel/VBox"]
+[node name="Hint" type="Label" parent="UpgradePanel/Center/Panel/VBox" unique_id=1181156940]
 layout_mode = 2
 theme_override_font_sizes/font_size = 16
 text = "A partida fica pausada até você escolher."
 horizontal_alignment = 1
 
-[node name="Option1" type="Button" parent="UpgradePanel/Center/Panel/VBox"]
+[node name="Option1" type="Button" parent="UpgradePanel/Center/Panel/VBox" unique_id=1926124029]
 custom_minimum_size = Vector2(440, 72)
 layout_mode = 2
 text = "Melhoria 1"
 
-[node name="Option2" type="Button" parent="UpgradePanel/Center/Panel/VBox"]
+[node name="Option2" type="Button" parent="UpgradePanel/Center/Panel/VBox" unique_id=2117558293]
 custom_minimum_size = Vector2(440, 72)
 layout_mode = 2
 text = "Melhoria 2"
 
-[node name="Option3" type="Button" parent="UpgradePanel/Center/Panel/VBox"]
+[node name="Option3" type="Button" parent="UpgradePanel/Center/Panel/VBox" unique_id=39834689]
 custom_minimum_size = Vector2(440, 72)
 layout_mode = 2
 text = "Melhoria 3"
+
+[node name="PhaseAnnouncement" type="Label" parent="." unique_id=1438761616]
+visible = false
+offset_left = 384.0
+offset_top = 24.0
+offset_right = 768.0
+offset_bottom = 88.0
+theme_override_font_sizes/font_size = 23
+text = "FASE 2 — AMEAÇA CRESCENTE"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PhaseAnnouncementTimer" type="Timer" parent="." unique_id=1665860450]
+wait_time = 2.5
+one_shot = true
