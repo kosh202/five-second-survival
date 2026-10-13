@@ -15,6 +15,11 @@ const XP_REWARD := 10
 const FAST_SPEED := 230.0
 const FAST_MAX_HEALTH := 2
 
+const TOUGH_SPEED := 100.0
+const TOUGH_MAX_HEALTH := 10
+const TOUGH_XP_REWARD := 20
+const TOUGH_RADIUS := 25.0
+
 @onready var _hitbox: Area2D = $Hitbox
 
 var health: int = MAX_HEALTH
@@ -26,6 +31,7 @@ var _movement_speed: float = SPEED
 var _max_health: int = MAX_HEALTH
 var _xp_reward: int = XP_REWARD
 var _is_fast_variant: bool = false
+var _is_tough_variant: bool = false
 
 
 func configure_fast_variant() -> void:
@@ -33,6 +39,14 @@ func configure_fast_variant() -> void:
 	_movement_speed = FAST_SPEED
 	_max_health = FAST_MAX_HEALTH
 	_xp_reward = XP_REWARD
+	health = _max_health
+
+
+func configure_tough_variant() -> void:
+	_is_tough_variant = true
+	_movement_speed = TOUGH_SPEED
+	_max_health = TOUGH_MAX_HEALTH
+	_xp_reward = TOUGH_XP_REWARD
 	health = _max_health
 
 
@@ -44,18 +58,27 @@ func _ready() -> void:
 
 
 func _draw() -> void:
+	var radius := RADIUS
+
+	if _is_tough_variant:
+		radius = TOUGH_RADIUS
+		draw_circle(Vector2.ZERO, radius, Color(0.55, 0.25, 0.78))
+		draw_circle(Vector2.ZERO, radius, Color(0.30, 0.12, 0.48), false, 3.0)
+		draw_circle(Vector2(-8, -6), 6.0, Color(0.38, 0.16, 0.58))
+		draw_circle(Vector2(7, 3), 5.0, Color(0.42, 0.18, 0.62))
+		draw_circle(Vector2(2, -10), 4.0, Color(0.48, 0.20, 0.68))
+		return
+
 	if _is_fast_variant:
-		# Variante veloz: vermelha para se distinguir da comum.
-		draw_circle(Vector2.ZERO, RADIUS, Color(0.92, 0.30, 0.20))
-		draw_circle(Vector2.ZERO, RADIUS, Color(0.55, 0.12, 0.10), false, 2.0)
+		draw_circle(Vector2.ZERO, radius, Color(0.92, 0.30, 0.20))
+		draw_circle(Vector2.ZERO, radius, Color(0.55, 0.12, 0.10), false, 2.0)
 		draw_circle(Vector2(-6, -4), 4.5, Color(0.62, 0.12, 0.10))
 		draw_circle(Vector2(5, 3), 3.5, Color(0.68, 0.16, 0.12))
 		draw_circle(Vector2(2, -7), 2.5, Color(0.75, 0.20, 0.15))
 		return
 
-	# Bactéria comum: círculo verde com manchas mais escuras.
-	draw_circle(Vector2.ZERO, RADIUS, Color(0.22, 0.72, 0.30))
-	draw_circle(Vector2.ZERO, RADIUS, Color(0.10, 0.38, 0.16), false, 2.0)
+	draw_circle(Vector2.ZERO, radius, Color(0.22, 0.72, 0.30))
+	draw_circle(Vector2.ZERO, radius, Color(0.10, 0.38, 0.16), false, 2.0)
 	draw_circle(Vector2(-6, -4), 4.5, Color(0.12, 0.48, 0.20))
 	draw_circle(Vector2(5, 3), 3.5, Color(0.14, 0.52, 0.22))
 	draw_circle(Vector2(2, -7), 2.5, Color(0.18, 0.60, 0.26))
@@ -96,7 +119,6 @@ func _update_flash(delta: float) -> void:
 
 
 func _try_damage_player() -> void:
-	# O jogador ignora dano durante a própria invulnerabilidade.
 	for body in _hitbox.get_overlapping_bodies():
 		if body is Player:
 			(body as Player).take_damage(DAMAGE)

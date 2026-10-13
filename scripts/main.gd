@@ -84,9 +84,18 @@ func _try_spawn_bacteria() -> bool:
 
 	var bacteria := BACTERIA_SCENE.instantiate() as Bacteria
 
-# Depois de 20 segundos, algumas bactérias serão velozes.
-	if _elapsed_seconds >= 20.0 and randf() < 0.3:
+
+# A partir de 45 segundos, podem surgir inimigos resistentes.
+	if _elapsed_seconds >= 45.0:
+		var variant_roll := randf()
+
+		if variant_roll < 0.15:
+			bacteria.configure_tough_variant()
+		elif variant_roll < 0.45:
+			bacteria.configure_fast_variant()
+	elif _elapsed_seconds >= 20.0 and randf() < 0.3:
 		bacteria.configure_fast_variant()
+
 
 	bacteria.defeated.connect(_on_enemy_defeated)
 	
