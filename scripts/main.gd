@@ -3,6 +3,8 @@ extends Node2D
 
 const BACTERIA_SCENE := preload("res://scenes/enemies/bacteria.tscn")
 
+const FOOD_ESSENCE_SCENE: PackedScene = preload("res://scenes/FoodEssence.tscn")
+
 # Chão da arena: de (-1200, -800) a (1200, 800). A margem evita nascer dentro da parede.
 const ARENA_MIN := Vector2(-1200.0, -800.0)
 const ARENA_MAX := Vector2(1200.0, 800.0)
@@ -33,7 +35,7 @@ var _level: int = 1
 var _xp_to_next: int = FIRST_LEVEL_XP
 var _pending_level_ups: int = 0
 var _choosing_upgrade: bool = false
-
+var _food_essence: int = 0
 
 func _ready() -> void:
 	_player.health_changed.connect(_hud.update_health)
@@ -184,9 +186,11 @@ func _random_edge_point(min_x: float, max_x: float, min_y: float, max_y: float) 
 			return Vector2(randf_range(max_x - band, max_x), randf_range(min_y, max_y))
 
 
-func _on_enemy_defeated(xp_amount: int) -> void:
+func _on_enemy_defeated(xp_amount: int, death_position: Vector2) -> void:
 	if _game_over:
 		return
+
+	call_deferred("_spawn_food_essence", death_position)
 
 	_xp += xp_amount
 	while _xp >= _xp_to_next:
@@ -197,6 +201,17 @@ func _on_enemy_defeated(xp_amount: int) -> void:
 
 	_hud.update_experience(_level, _xp, _xp_to_next)
 	_try_show_next_upgrade()
+
+func _spawn_food_essence(death_position: Vector2) -> void:
+	var essence = FOOD_ESSENCE_SCENE.instantiate()
+	add_child(essence)
+	essence.global_position = death_position
+	essence.connect("collected", _on_food_essence_collected)
+
+func _on_food_essence_collected(amount: int) -> void:
+	_food_essence += amount
+	_hud.update_essence(_food_essence)
+	print("Essência coletada: +%d | Total: %d" % [amount, _food_essence])
 
 
 func _try_show_next_upgrade() -> void:

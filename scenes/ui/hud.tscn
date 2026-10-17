@@ -28,6 +28,12 @@ theme_override_colors/font_color = Color(0.82, 0.92, 1, 1)
 theme_override_font_sizes/font_size = 24
 text = "Tempo: 0.0s"
 
+[node name="EssenceLabel" type="Label" parent="Margin/VBox" unique_id=175531996]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.61960787, 1, 0.7647059, 1)
+theme_override_font_sizes/font_size = 21
+text = "Essência: 0"
+
 [node name="PhaseLabel" type="Label" parent="Margin/VBox" unique_id=626217749]
 layout_mode = 2
 text = "Fase 1 — Início"

@@ -3,7 +3,7 @@ class_name Bacteria
 extends CharacterBody2D
 ## Inimigo que persegue o jogador e pode ser eliminado.
 
-signal defeated(xp_amount: int)
+signal defeated(xp_amount: int, death_position: Vector2)
 
 const SPEED := 150.0
 const DAMAGE := 1
@@ -129,5 +129,5 @@ func _die() -> void:
 		return
 
 	is_dead = true
-	defeated.emit(_xp_reward)
+	defeated.emit(_xp_reward, global_position)
 	queue_free()

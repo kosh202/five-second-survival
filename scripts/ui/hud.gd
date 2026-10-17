@@ -17,6 +17,7 @@ const UPGRADE_TEXT := {
 @onready var _phase_label: Label = $Margin/VBox/PhaseLabel
 @onready var _level_label: Label = $Margin/VBox/LevelLabel
 @onready var _xp_label: Label = $Margin/VBox/XpLabel
+@onready var _essence_label: Label = $Margin/VBox/EssenceLabel
 @onready var _xp_bar: ProgressBar = $Margin/VBox/XpBar
 @onready var _game_over: Control = $GameOver
 @onready var _restart_button: Button = $GameOver/Center/Panel/VBox/RestartButton
@@ -128,3 +129,6 @@ func _on_option_pressed(index: int) -> void:
 
 func _on_restart_pressed() -> void:
 	restart_requested.emit()
+	
+func update_essence(amount: int) -> void:
+	_essence_label.text = "Essência: %d" % amount

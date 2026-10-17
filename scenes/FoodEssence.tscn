@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://b25jemoxul51s"]
+
+[ext_resource type="Script" uid="uid://b5lx6t0y6gghe" path="res://scripts/food_essence.gd" id="1_eaquo"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_cag1y"]
+radius = 16.0
+
+[node name="FoodEssence" type="Area2D" unique_id=680010680]
+script = ExtResource("1_eaquo")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1091592806]
+shape = SubResource("CircleShape2D_cag1y")
